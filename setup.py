@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='re_helper',
-    version='1.2.0',
+    version='1.2.1',
     description=(
         're tool easy for use'
     ),

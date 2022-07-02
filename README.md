@@ -58,7 +58,13 @@ pip install re_helper
     print(ReHelper.get_price('Price:$10.18 ($0.28 / Count)'))
 ```
 
-##### 9.其它例子
+##### 9.匹配所有超链接地址
+```
+    print(ReHelper.extract_all_a_href('<a href="http://www.xx.com">1234</a>wee3'
+                                      '<a href="/aa.html" alt="123">'
+```
+
+##### 10.其它例子
 ```python
     from re_helper import ReHelper
     ReHelper.extract_bsr_ranks('19 in Mobile Phone Projectors 19 in Mobile 335,899 in aaaa')

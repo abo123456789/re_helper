@@ -25,6 +25,22 @@ class ReHelper(object):
             return images
 
     @staticmethod
+    def extract_all_a_href(str_source: str, pre_url: str = '') -> list:
+        """
+        extract all a href link from str
+        """
+        links = []
+        if str_source:
+            links = re.findall(r'<a.*?href="(.*?)".*?/?>', str_source, flags=re.IGNORECASE)
+            if len(links) == 0:
+                links = re.findall(r'<a.*?href=\"(.*?)\".*?/?>', str_source,
+                                   flags=re.IGNORECASE)
+        if pre_url:
+            return [urllib.parse.urljoin(pre_url, link.strip()) for link in links if link and link != '#']
+        else:
+            return [link.strip() for link in links if link and link != '#']
+
+    @staticmethod
     def extract_videos_src(str_source: str) -> list:
         if str_source:
             return re.findall(r'<iframe.*?src="(.*?)".*?/?>', str_source, flags=re.IGNORECASE)
@@ -311,3 +327,6 @@ if __name__ == '__main__':
     print(ReHelper.parse_chinese('中123中国人chinese....!@'))
 
     print(ReHelper.get_price('Price:$10.18 ($0.28 / Count)'))
+
+    print(ReHelper.extract_all_a_href('<a href="http://www.xx.com">1234</a>wee3'
+                                      '<a href="/aa.html" alt="123">'))
