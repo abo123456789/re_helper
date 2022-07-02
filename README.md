@@ -61,7 +61,7 @@ pip install re_helper
 ##### 9.匹配所有超链接地址
 ```
     print(ReHelper.extract_all_a_href('<a href="http://www.xx.com">1234</a>wee3'
-                                      '<a href="/aa.html" alt="123">'
+                                      '<a href="/aa.html" alt="123">'))
 ```
 
 ##### 10.其它例子
