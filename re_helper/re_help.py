@@ -246,6 +246,23 @@ class ReHelper(object):
             return ''.join(o_results)
         return None
 
+    @staticmethod
+    def extract_ipv4(str_source: str):
+        source = ReHelper.extract_one_by_pattern("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}", str_source)
+        return source
+
+    @staticmethod
+    def extract_ipv6(str_source: str):
+        source = ReHelper.extract_one_by_pattern("(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))", str_source)
+        return source
+
+    @staticmethod
+    def extract_bitcoin_address(str_source: str):
+        source = ReHelper.extract_one_by_pattern(
+            "(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}",
+            str_source)
+        return source
+
 
 if __name__ == '__main__':
     pass
@@ -330,3 +347,9 @@ if __name__ == '__main__':
 
     print(ReHelper.extract_all_a_href('<a href="http://www.xx.com">1234</a>wee3'
                                       '<a href="/aa.html" alt="123">'))
+
+    print(ReHelper.extract_ipv4('www 25.192.255.2057www'))
+
+    print(ReHelper.extract_ipv6('WWFE80:0000:0000:0000:0202:B3FF:FE1E:8329321'))
+
+    print(ReHelper.extract_bitcoin_address('----ww1EBHA1ckUWzNKN7BMfDwGTx6GKEbADUozX--------'))

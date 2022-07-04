@@ -122,6 +122,12 @@ pip install re_helper
     print(ReHelper.parse_email('123 rew 123@qq.com 111ddddd as@yy.com qq.com'))
 
     print(ReHelper.parse_chinese('中123中国人chinese....!@'))
+
+    print(ReHelper.extract_ipv4('www 25.192.255.2057www'))
+
+    print(ReHelper.extract_ipv6('WWFE80:0000:0000:0000:0202:B3FF:FE1E:8329321'))
+
+    print(ReHelper.extract_bitcoin_address('----ww1EBHA1ckUWzNKN7BMfDwGTx6GKEbADUozX--------'))
 ```
 
 
