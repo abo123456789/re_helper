@@ -128,6 +128,12 @@ pip install re_helper
     print(ReHelper.extract_ipv6('WWFE80:0000:0000:0000:0202:B3FF:FE1E:8329321'))
 
     print(ReHelper.extract_bitcoin_address('----ww1EBHA1ckUWzNKN7BMfDwGTx6GKEbADUozX--------'))
+    
+    # 邮箱脱敏
+    print(ReHelper.email_desensitization('3333333@xx.com'))
+    
+    #手机号脱敏
+    print(ReHelper.phone_desensitization('13711111111'))
 ```
 
 

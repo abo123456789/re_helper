@@ -248,12 +248,15 @@ class ReHelper(object):
 
     @staticmethod
     def extract_ipv4(str_source: str):
-        source = ReHelper.extract_one_by_pattern("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}", str_source)
+        source = ReHelper.extract_one_by_pattern(
+            "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}", str_source)
         return source
 
     @staticmethod
     def extract_ipv6(str_source: str):
-        source = ReHelper.extract_one_by_pattern("(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))", str_source)
+        source = ReHelper.extract_one_by_pattern(
+            "(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))",
+            str_source)
         return source
 
     @staticmethod
@@ -262,6 +265,38 @@ class ReHelper(object):
             "(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}",
             str_source)
         return source
+
+    @staticmethod
+    def phone_desensitization(phone: str) -> [str, None]:
+        """手机号码脱敏"""
+        if not phone:
+            return phone
+        chars = list(phone)
+        for i in range(0, len(chars)):
+            if len(chars) > 11:
+                if 6 <= i <= 9:
+                    chars[i] = "*"
+            else:
+                if 3 <= i <= 6:
+                    chars[i] = "*"
+        return ''.join(chars)
+
+    @staticmethod
+    def email_desensitization(email: str) -> [str, None]:
+        """邮箱脱敏"""
+        if not email:
+            return email
+        email_before = email.split('@')[0]
+        email_after = email.split('@')[1]
+        chars = list(email_before)
+        if len(email_before) >= 4:
+            for i in range(len(chars) - 4, len(chars)):
+                chars[i] = '*'
+        else:
+            for i in range(0, len(chars)):
+                chars[i] = '*'
+        email_before = ''.join(chars)
+        return f"{email_before}@{email_after}"
 
 
 if __name__ == '__main__':
@@ -353,3 +388,7 @@ if __name__ == '__main__':
     print(ReHelper.extract_ipv6('WWFE80:0000:0000:0000:0202:B3FF:FE1E:8329321'))
 
     print(ReHelper.extract_bitcoin_address('----ww1EBHA1ckUWzNKN7BMfDwGTx6GKEbADUozX--------'))
+
+    print(ReHelper.email_desensitization('3333333@xx.com'))
+
+    print(ReHelper.phone_desensitization('13711111111'))
