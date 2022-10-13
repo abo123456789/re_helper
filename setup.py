@@ -13,7 +13,7 @@ setup(
     keywords=(
         "re_helper"),
     long_description_content_type="text/markdown",
-    long_description=open('README_PY.md', encoding='utf-8').read(),
+    long_description=open('README_PY.md').read(),
     author='cc',
     author_email='abcdef123456chen@sohu.com',
     maintainer='cc',
