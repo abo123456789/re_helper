@@ -1,9 +1,13 @@
 # -*- coding:utf-8 -*-
 # @Author cc
 # @TIME 2019/5/25 23:26
+import sys
 
 from setuptools import setup, find_packages
 
+py_version = sys.version_info.major
+long_description = open('README_PY.md', encoding='utf-8').read() if py_version == 3 else \
+    open('README_PY.md').read()
 setup(
     name='re_helper',
     version='1.2.4',
@@ -13,7 +17,7 @@ setup(
     keywords=(
         "re_helper"),
     long_description_content_type="text/markdown",
-    long_description=open('README_PY.md').read(),
+    long_description=long_description,
     author='cc',
     author_email='abcdef123456chen@sohu.com',
     maintainer='cc',
